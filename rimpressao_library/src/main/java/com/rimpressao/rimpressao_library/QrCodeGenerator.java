@@ -1,4 +1,4 @@
-package com.rimpressao.rimpressao;
+package com.rimpressao.rimpressao_library;
 
 import android.graphics.Bitmap;
 

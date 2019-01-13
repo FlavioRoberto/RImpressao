@@ -3,8 +3,13 @@ apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: "com.jfrog.bintray"
 
 android {
+    signingConfigs {
+        config {
+        }
+    }
     compileSdkVersion 28
     defaultConfig {
+        applicationId "com.rimpressao.rimpressao"
         minSdkVersion 22
         targetSdkVersion 27
         versionCode 3

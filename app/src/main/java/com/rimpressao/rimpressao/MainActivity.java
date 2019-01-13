@@ -10,11 +10,14 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.rimpressao.rimpressao_library.Impressao.CieloLio;
+import com.rimpressao.rimpressao_library.Impressao.Linha;
 import com.rimpressao.rimpressao_library.QrCodeGenerator;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import cielo.orders.domain.Credentials;
@@ -107,6 +110,7 @@ public class MainActivity extends AppCompatActivity {
 
 
                 orderManager.checkoutOrder(order.getId(), 200, paymentListener);
+                orderManager.unbind();
 
             }
 
@@ -121,31 +125,16 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void imprimeQrCode(String text) {
-        PrinterManager printerManager = new PrinterManager(getApplicationContext());
-        PrinterListener printerListener = new PrinterListener() {
-            @Override
-            public void onPrintSuccess() {
-                Toast.makeText(getApplicationContext(), "Sucesso", Toast.LENGTH_LONG).show();
-            }
-
-            @Override
-            public void onError(@Nullable Throwable throwable) {
-                if (throwable != null)
-                    Toast.makeText(getApplicationContext(), "Erro: " + throwable.getMessage(), Toast.LENGTH_LONG).show();
-            }
-
-            @Override
-            public void onWithoutPaper() {
-                Toast.makeText(getApplicationContext(), "Sem papel", Toast.LENGTH_LONG).show();
-            }
-        };
         Bitmap qrCode = QrCodeGenerator.generate(text, 200, 200);
         imageView.setImageBitmap(qrCode);
-        printerManager.printImage(qrCode, style(), printerListener);
+        CieloLio cieloLio = new CieloLio(getApplicationContext());
+        ArrayList<Linha> texto = new ArrayList<Linha>();
+        texto.add(new Linha("Teste", null, style()));
+        texto.add(new Linha("", qrCode, style()));
+        cieloLio.imprimir(texto);
     }
 
     private HashMap<String, Integer> style() {
-        PrinterAttributes printerAttributes = new PrinterAttributes();
         HashMap<String, Integer> alignCenter = new HashMap<>();
         alignCenter.put(PrinterAttributes.KEY_ALIGN, PrinterAttributes.VAL_ALIGN_CENTER);
         alignCenter.put(PrinterAttributes.KEY_TYPEFACE, 1);

@@ -9,13 +9,13 @@
 
     <EditText
         android:id="@+id/editText"
-        android:layout_width="match_parent"
+        android:layout_width="match_parent" android:inputType="" 
         android:layout_height="wrap_content" />
 
     <ImageView
         android:layout_weight="1"
         android:id="@+id/imageView"
-        android:layout_width="match_parent"
+        android:layout_width="match_parent" android:contentDescription="TODO" 
         android:layout_height="match_parent" />
 
     <Button

@@ -1,4 +1,5 @@
 apply plugin: 'com.android.library'
+apply plugin: 'maven'
 
 android {
     compileSdkVersion 28
@@ -21,6 +22,18 @@ android {
         lib {
         }
     }
+
+    uploadArchives {
+        repositories {
+            mavenDeployer {
+                repository(url: "file:///C:/gradle/rep/")
+                pom.groupId = GROUP
+                pom.artifactId = POM_ARTIFACT_ID
+                pom.version = VERSION_NAME
+            }
+        }
+    }
+    task install(dependsOn: uploadArchives)
 
 }
 
